@@ -4,7 +4,7 @@ import uuid
 
 import httpx
 
-from inject_collect_project.event_emitter import EventEmitter
+from event_emitter import EventEmitter
 
 logger = logging.getLogger(__name__)
 

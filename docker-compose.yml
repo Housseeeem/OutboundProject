@@ -1,0 +1,154 @@
+services:
+  # Shared Redis service — message broker between inject_collector and api
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - agentic_network
+
+  # inject_collect_project — data collection, enrichment, and event emission
+  inject_collector:
+    build:
+      context: ./inject_collect_project
+      dockerfile: Dockerfile
+    container_name: inject_collector
+    working_dir: /app
+    env_file:
+      - ./inject_collect_project/.env
+    environment:
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      REDIS_URL: "redis://redis:6379"
+    volumes:
+      - ./inject_collect_project/scraped_data:/app/scraped_data
+      - ./inject_collect_project/merged_profiles:/app/merged_profiles
+      - ./inject_collect_project/comparisons:/app/comparisons
+      - ./inject_collect_project/personas_discovered:/app/personas_discovered
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    restart: "no"
+    depends_on:
+      - redis
+    networks:
+      - agentic_network
+      - scraper_network
+
+  # WorkerModule API — event ingestion and storage
+  api:
+    build:
+      context: ./WorkerModule
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./WorkerModule/.env
+    environment:
+      REDIS_URL: "redis://redis:6379"
+      DATABASE_URL: "postgresql://user:password@postgres:5432/agentic"
+      NEO4J_URI: "neo4j+s://f3c9690f.databases.neo4j.io"
+      NEO4J_USER: "f3c9690f"
+      NEO4J_PASSWORD: "yaTDH-OoEpRR9oOpTSmC2FuqkNbenW66vfe-_okF3co"
+      # Enrichment API keys (forwarded from inject_collect_project)
+      SERPER_API_KEY: "cc064d59deba3eb973bb6891f6dbe6af5a4a2ce6fc8b5d6f4ad58f03135ce800"
+      HUNTER_API_KEY: "c28d7fe76aeb9acf05f553b5b0976f06f216078f"
+      SNOVIO_CLIENT_ID: "011b92adbfae5af804329bbd5d854110"
+      SNOVIO_CLIENT_SECRET: "1415fcaae5046ff72804ec90301f14e3"
+      TOMBA_API_KEY: "ta_tpnwwttihx8m76ke2558tjdso9jnds4wk40es"
+      TOMBA_API_SECRET: "ts_282a1b3d-a454-498d-acb3-666ed8f04cb6"
+      AEROLEADS_API_KEY: "14d7acd6938c24ba059014c50f1eff35"
+    volumes:
+      - ./inject_collect_project:/inject_collect_project:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+      redis:
+        condition: service_started
+    networks:
+      - agentic_network
+
+  # Detective — ICP scoring and persona ranking
+  detective:
+    build:
+      context: ./detective
+    container_name: detective-service
+    ports:
+      - "8002:8002"
+    env_file:
+      - ./detective/.env
+    environment:
+      REDIS_URL: "redis://redis:6379"
+      WORKER_URL: "http://api:8000"
+      WRITER_URL: "http://writer:8003"
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./inject_collect_project/merged_profiles:/app/merged_profiles:ro
+      - ./inject_collect_project/personas_discovered:/app/personas_discovered:ro
+    depends_on:
+      - redis
+    networks:
+      - agentic_network
+
+  # Writer — AI message generation
+  writer:
+    build:
+      context: ./Full-Writer/ai-outreach-writer-module-master
+    container_name: writer-service
+    ports:
+      - "8003:8003"
+    env_file:
+      - ./Full-Writer/ai-outreach-writer-module-master/.env
+    environment:
+      REDIS_URL: "redis://redis:6379"
+      WORKER_URL: "http://api:8000"
+      PORT: "8003"
+      PYTHONUNBUFFERED: "1"
+    depends_on:
+      - redis
+    networks:
+      - agentic_network
+
+
+
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d agentic"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: agentic
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - agentic_network
+
+
+
+volumes:
+  redis_data:
+  postgres_data:
+
+
+networks:
+  agentic_network:
+    driver: bridge
+  scraper_network:
+    driver: bridge
