@@ -27,4 +27,4 @@ EXPOSE 8002
 
 # Default: run the FastAPI server (A2A + Redis subscriber)
 # To run the old CLI pipeline instead: docker run ... python main.py
-CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8002"]
+CMD sh -c "uvicorn app.server:app --host 0.0.0.0 --port ${PORT:-8002}"

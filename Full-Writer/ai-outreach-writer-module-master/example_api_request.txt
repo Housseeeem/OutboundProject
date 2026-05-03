@@ -1,0 +1,42 @@
+{
+  "target_prospect": "Sarah Chen",
+  "target_company": "Ramp",
+  "prospect_role": "VP of Sales",
+  "channel": "linkedin_dm",
+  "intent": "direct_outreach",
+  "stage": "first_touch",
+  "personality": {
+    "base_template": "soft_sell",
+    "personality_traits": ["curious", "direct"],
+    "always_include_phrases": [],
+    "never_use_phrases": ["synergies", "circle back"],
+    "touchdowns_per_message": 2,
+    "enabled_hook_types": ["linkedin_post", "company_news"],
+    "urgency_level": 2,
+    "self_deprecation": 1,
+    "humor_sarcasm": 3
+  },
+  "company_details": {
+    "company_name": "SalesForce AI",
+    "elevator_pitch": "We help SDR teams double their reply rates using AI personalization.",
+    "value_props": [
+      "2x reply rates",
+      "Saves 3 hours per SDR per day"
+    ],
+    "social_proof": [
+      "Used by 500+ sales teams"
+    ]
+  },
+  "selected_offer": {
+    "offer_name": "SDR Efficiency Audit",
+    "pain_points": [
+      "Low reply rates on outbound",
+      "SDRs spending too much time on manual research"
+    ],
+    "solution_summary":  "A diagnostic assessment of the SDR workflow to identify bottlenecks in targeting, data quality, and sequencing, resulting in a prioritized action plan for improving reply rates.",
+    "proof_points": [
+      "Teams saw 40% more meetings in 30 days"
+    ],
+    "cta": "Ask if they are open to a brief, 15-minute chat to discuss this further."
+  }
+}

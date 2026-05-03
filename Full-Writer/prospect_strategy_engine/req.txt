@@ -1,0 +1,49 @@
+## 🛠️ Technologies utilisées
+- **Framework :** LangGraph (StateGraph)
+- **Extraction :** Hunter.io API
+- **Recherche Web :** Tavily API
+- **IA Locale :** Ollama (Modèle Mistral)
+- **Interface :** Streamlit
+
+
+----Installer temporal et mettre temporal.exe dans la racine de dossier .
+
+1-Créer l'environnement virtuel :
+
+python -m venv venv
+.\venv\Scripts\activate
+
+2-Installer les dépendances :
+
+pip install -r requirements.txt
+
+
+3-Créez un fichier .env à la racine et ajoutez ces clés :
+
+APOLLO_API_KEY=Dx-McXnIopwfjHECHipa8Q
+HUNTER_API_KEY=2cdf8e0b1887aacaad6593dbc2af25930cb842cc
+TAVILY_API_KEY=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
+
+
+4-Pour faire fonctionner l'intégralité du système, vous devez ouvrir 3 terminaux différents :
+
+1️⃣ Terminal 1 : Le Serveur d'IA (Ollama)
+Assurez-vous qu'Ollama est installé et lancez le modèle Mistral :
+
+
+ollama run mistral
+
+
+
+2️⃣ Terminal 2 : Le Backend (Le Graphe)
+Ce terminal sert à vérifier les connexions ou lancer des tests isolés (Optionnel si vous utilisez l'App) :
+
+python worker.py
+
+
+3️⃣ Terminal 3 : L'Interface Utilisateur (Streamlit)
+C'est ici que vous lancez l'application web pour l'utilisateur final :
+
+
+streamlit run app.py
+
