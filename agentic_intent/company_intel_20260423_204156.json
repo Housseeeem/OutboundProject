@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-23T20:41:56.887605",
+    "total_companies": 2,
+    "companies_analyzed": [
+      "Tesla",
+      "Rivian"
+    ]
+  },
+  "companies": {
+    "Tesla": {
+      "funding_events": [
+        {
+          "event": {
+            "title": "Tesla Funding Overview",
+            "confidence": 0.85
+          },
+          "financial_details": {
+            "amount": "$8,296,050,672",
+            "amount_confidence": 0.7,
+            "investor": "None",
+            "investor_confidence": 0.0
+          },
+          "date": {
+            "value": "None",
+            "confidence": 0.0
+          },
+          "source": {
+            "name": "owler.com",
+            "url": "https://en.wikipedia.org/wiki/History_of_Tesla,_Inc."
+          },
+          "type": "funding"
+        }
+      ],
+      "news_events": [
+        {
+          "event": {
+            "title": "Tesla Q1 earnings report and outlook on spending and robotics",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "USA TODAY",
+            "url": "https://www.usatoday.com/story/cars/news/2026/04/23/tesla-earnings-takeaways-optimus-robot-robotaxi-musk/89740330007/"
+          },
+          "date": "2026-04-14T19:38:42+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Tesla announces $25 billion spending increase for AI and robotics",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "Los Angeles Times",
+            "url": "https://www.latimes.com/business/story/2026-04-23/tesla-boosts-spending-plan-to-25-billion-for-ai-robots"
+          },
+          "date": "2026-04-18T19:38:42+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Cathie Wood invests $14 million in Tesla amid stock decline",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "Moneywise on MSN",
+            "url": "https://www.msn.com/en-us/money/personalfinance/tesla-stock-is-sliding-but-cathie-wood-just-bet-14-million-that-everyone-else-is-wrong/ar-AA21zon1?ocid=BingNewsVerp"
+          },
+          "date": "2026-04-21T19:38:42+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "SpaceX IPO potential impact on Tesla shares",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "Forbes",
+            "url": "https://www.forbes.com/sites/alanohnsman/2026/04/23/spacexs-ipo-could-leave-tesla-eating-rocket-dust/"
+          },
+          "date": "2026-04-14T19:38:42+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 1,
+        "total_news_events": 4,
+        "high_confidence_funding": 1,
+        "high_confidence_news": 4
+      }
+    },
+    "Rivian": {
+      "funding_events": [
+        {
+          "event": {
+            "title": "Rivian receives conditional $6.6-billion federal loan to fund",
+            "confidence": 1.0
+          },
+          "financial_details": {
+            "amount": "$6.6 billion",
+            "amount_confidence": 1.0,
+            "investor": "U.S. federal government",
+            "investor_confidence": 1.0
+          },
+          "date": {
+            "value": "",
+            "confidence": 0.0
+          },
+          "source": {
+            "name": "latimes.com",
+            "url": "https://www.latimes.com/business/story/2024-11-26/rivian-6-6-billion-loan-factory-georgia-ev-market-trump-biden"
+          },
+          "type": "funding"
+        },
+        {
+          "event": {
+            "title": "Rivian announces $2.5 billion funding round",
+            "confidence": 1.0
+          },
+          "financial_details": {
+            "amount": "$2.5 billion",
+            "amount_confidence": 1.0,
+            "investor": "funds and accounts advised by T",
+            "investor_confidence": 0.33
+          },
+          "date": {
+            "value": "",
+            "confidence": 0.0
+          },
+          "source": {
+            "name": "speedlux.com",
+            "url": "https://speedlux.com/rivian-announces-2-5-billion-funding-round/"
+          },
+          "type": "funding"
+        },
+        {
+          "event": {
+            "title": "Rivian's Funding Under Fire: Political Play or Economic",
+            "confidence": 1.0
+          },
+          "financial_details": {
+            "amount": "None",
+            "amount_confidence": 0.0,
+            "investor": "None",
+            "investor_confidence": 0.0
+          },
+          "date": {
+            "value": "",
+            "confidence": 0.0
+          },
+          "source": {
+            "name": "wallstreetpit.com",
+            "url": "https://wallstreetpit.com/120784-rivians-funding-under-fire-political-play-or-economic-strategy/"
+          },
+          "type": "funding"
+        }
+      ],
+      "news_events": [
+        {
+          "event": {
+            "title": "Rivian begins production of R2 electric SUV at Normal, Illinois plant",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "Yahoo Finance",
+            "url": "https://finance.yahoo.com/sectors/technology/articles/rivian-starts-r2-ev-production-121608256.html"
+          },
+          "date": "2026-04-17T19:40:35+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Rivian anticipates R2 launch amid upcoming Q1 earnings and pre-order opportunities",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "Seeking Alpha",
+            "url": "https://seekingalpha.com/article/4893068-rivian-r2-is-launching-at-just-the-right-time"
+          },
+          "date": "2026-04-02T19:40:35+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 3,
+        "total_news_events": 2,
+        "high_confidence_funding": 3,
+        "high_confidence_news": 2
+      }
+    }
+  }
+}

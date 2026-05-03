@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-24T09:35:17.377383",
+    "total_companies": 2,
+    "companies_analyzed": [
+      "Tesla",
+      "Addvocate AI"
+    ]
+  },
+  "companies": {
+    "Tesla": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Tesla's Quarterly Earnings and Developments",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "Yahoo Finance",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/tesla-says-millions-full-self-185159468.html"
+          },
+          "date": "2026-03-17T08:35:10+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "SpaceX IPO Impact on Tesla",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "Forbes",
+            "url": "https://www.forbes.com/sites/alanohnsman/2026/04/23/spacexs-ipo-could-leave-tesla-eating-rocket-dust/"
+          },
+          "date": "2026-04-02T08:35:10+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 2,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 2
+      }
+    },
+    "Addvocate AI": {
+      "funding_events": [],
+      "news_events": [],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 0,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 0
+      }
+    }
+  }
+}

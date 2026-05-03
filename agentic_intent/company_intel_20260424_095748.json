@@ -1,0 +1,69 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-24T09:57:48.542231",
+    "total_companies": 2,
+    "companies_analyzed": [
+      "Tesla",
+      "Addvocate AI"
+    ]
+  },
+  "companies": {
+    "Tesla": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Tesla Earnings Report and Spending Increase",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "Insider",
+            "url": "https://www.businessinsider.com/tesla-q1-earnings-updates-tsla-stock-robotaxis-elon-musk-2026-4"
+          },
+          "date": "2026-04-24T07:03:00+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Tesla Acquires AI Hardware Company",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "Insider",
+            "url": "https://www.businessinsider.com/tesla-mystery-ai-hardware-company-acquisition-2026-4"
+          },
+          "date": "2026-04-23T14:58:00+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Tesla Starts Robotaxi Production",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "Yahoo Finance",
+            "url": "https://finance.yahoo.com/sectors/technology/articles/musk-says-tesla-started-robotaxi-082457124.html"
+          },
+          "date": "2026-04-24T08:52:00+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 3,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 3
+      }
+    },
+    "Addvocate AI": {
+      "funding_events": [],
+      "news_events": [],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 0,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 0
+      }
+    }
+  }
+}

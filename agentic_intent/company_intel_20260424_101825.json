@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-24T10:18:25.121250",
+    "total_companies": 1,
+    "companies_analyzed": [
+      "Addvocate AI"
+    ]
+  },
+  "companies": {
+    "Addvocate AI": {
+      "funding_events": [],
+      "news_events": [],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 0,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+fastmcp
+duckduckgo-search
+python-dotenv
+langgraph
+langchain-openai
+langchain-core
+langchain-groq
+openai
+mcp
+anyio

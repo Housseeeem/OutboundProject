@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-24T09:26:15.414238",
+    "total_companies": 2,
+    "companies_analyzed": [
+      "Tesla",
+      "Rivian"
+    ]
+  },
+  "companies": {
+    "Tesla": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Tesla's Financial Performance and Investments",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "TheStreet",
+            "url": "https://www.thestreet.com/crypto/markets/teslas-quarterly-earnings-reveal-one-unchanging-factor"
+          },
+          "date": "2026-04-11T08:26:07+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "SpaceX IPO Impact on Tesla",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "Forbes",
+            "url": "https://www.forbes.com/sites/alanohnsman/2026/04/23/spacexs-ipo-could-leave-tesla-eating-rocket-dust/"
+          },
+          "date": "2026-04-03T08:26:07+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Tesla's FSD Hardware Upgrades",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "MSN",
+            "url": "https://www.msn.com/en-us/news/other/tesla-to-require-costly-fsd-hardware-upgrades-for-older-cars/gm-GM218E68FA?ocid=BingNewsVerp"
+          },
+          "date": "2026-03-27T08:26:07+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 3,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 3
+      }
+    },
+    "Rivian": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Rivian's Illinois factory damaged by tornado",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "autoevolution",
+            "url": "https://www.autoevolution.com/news/rivian-sends-the-r2-into-production-despite-factory-being-hit-by-tornado-268990.html"
+          },
+          "date": "2026-04-05T08:26:14+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Rivian's stock potential and growth",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "The Motley Fool",
+            "url": "https://www.fool.com/investing/2026/04/21/is-hot-ticker-the-10x-stock-youve-been-looking-for/"
+          },
+          "date": "2026-04-22T08:26:14+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 2,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 2
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-24T10:13:45.651526",
+    "total_companies": 1,
+    "companies_analyzed": [
+      "Tesla"
+    ]
+  },
+  "companies": {
+    "Tesla": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Tesla's Quarterly Earnings and Investment Plans",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "NPR",
+            "url": "https://www.npr.org/2026/04/22/nx-s1-5791653/tesla-earnings-first-quarter-2026"
+          },
+          "date": "2026-04-23T09:13:42+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Potential Impact of SpaceX IPO on Tesla",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "Forbes",
+            "url": "https://www.forbes.com/sites/alanohnsman/2026/04/23/spacexs-ipo-could-leave-tesla-eating-rocket-dust/"
+          },
+          "date": "2026-04-02T09:13:42+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Delay in Tesla Roadster Debut",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "USA TODAY",
+            "url": "https://www.usatoday.com/story/cars/news/2026/04/23/tesla-roadster-update-elon-musk/89750132007/"
+          },
+          "date": "2026-04-14T09:13:42+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 3,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 3
+      }
+    }
+  }
+}

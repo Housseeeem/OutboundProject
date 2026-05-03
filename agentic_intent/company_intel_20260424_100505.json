@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-24T10:05:05.434983",
+    "total_companies": 2,
+    "companies_analyzed": [
+      "Tesla",
+      "Addvocate AI"
+    ]
+  },
+  "companies": {
+    "Tesla": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Tesla's Financial Strategy and Investments",
+            "confidence": 0.6
+          },
+          "source": {
+            "name": "TheStreet",
+            "url": "https://www.thestreet.com/crypto/markets/teslas-quarterly-earnings-reveal-one-unchanging-factor"
+          },
+          "date": "2026-04-11T09:04:57+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Tesla Roadster Debut Delay",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "USA TODAY",
+            "url": "https://www.usatoday.com/story/cars/news/2026/04/23/tesla-roadster-update-elon-musk/89750132007/"
+          },
+          "date": "2026-04-14T09:04:57+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Potential Impact of SpaceX IPO on Tesla",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "Forbes",
+            "url": "https://www.forbes.com/sites/alanohnsman/2026/04/23/spacexs-ipo-could-leave-tesla-eating-rocket-dust/"
+          },
+          "date": "2026-04-02T09:04:57+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Investor Expectations for Tesla Valuation",
+            "confidence": 1.0
+          },
+          "source": {
+            "name": "AOL",
+            "url": "https://www.aol.com/articles/gary-black-says-teslas-25-023103684.html"
+          },
+          "date": "2026-04-19T09:04:57+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 4,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 3
+      }
+    },
+    "Addvocate AI": {
+      "funding_events": [],
+      "news_events": [],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 0,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 0
+      }
+    }
+  }
+}

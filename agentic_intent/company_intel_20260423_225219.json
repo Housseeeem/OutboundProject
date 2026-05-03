@@ -1,0 +1,166 @@
+{
+  "metadata": {
+    "generated_at": "2026-04-23T22:52:17.899192",
+    "total_companies": 3,
+    "companies_analyzed": [
+      "Tesla",
+      "Rivian",
+      "Nio"
+    ]
+  },
+  "companies": {
+    "Tesla": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Tesla Q1 Earnings Report",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "USA TODAY",
+            "url": "https://www.usatoday.com/story/cars/news/2026/04/23/tesla-earnings-takeaways-optimus-robot-robotaxi-musk/89740330007/"
+          },
+          "date": "2026-04-23T10:31:00+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Tesla Roadster Debut Delay",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "USA TODAY",
+            "url": "https://www.usatoday.com/story/cars/news/2026/04/23/tesla-roadster-update-elon-musk/89750132007/"
+          },
+          "date": "2026-04-23T18:11:00+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "SpaceX IPO Impact on Tesla",
+            "confidence": 0.6
+          },
+          "source": {
+            "name": "Forbes",
+            "url": "https://www.forbes.com/sites/alanohnsman/2026/04/23/spacexs-ipo-could-leave-tesla-eating-rocket-dust/"
+          },
+          "date": "2026-04-23T10:32:00+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 3,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 2
+      }
+    },
+    "Rivian": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "Rivian's R2 Production and Tornado Damage to Illinois Factory",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "Yahoo Finance",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/rivian-automotive-rivn-valuation-check-170849991.html"
+          },
+          "date": "2026-04-19T21:52:12+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Rivian's R2 Launch Timing",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "Seeking Alpha",
+            "url": "https://seekingalpha.com/article/4893068-rivian-r2-is-launching-at-just-the-right-time"
+          },
+          "date": "2026-03-31T21:52:12+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 2,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 2
+      }
+    },
+    "Nio": {
+      "funding_events": [],
+      "news_events": [
+        {
+          "event": {
+            "title": "NIO Workforce Reduction",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "Yahoo Finance",
+            "url": "https://finance.yahoo.com/markets/stocks/articles/nio-reshapes-workforce-record-deliveries-100419549.html"
+          },
+          "date": "2026-04-12T21:52:16+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "NIO Stock Information",
+            "confidence": 0.5
+          },
+          "source": {
+            "name": "CNN",
+            "url": "https://www.cnn.com/markets/stocks/NIO"
+          },
+          "date": "2026-02-05T23:00:00+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "NIO European Solution and Stock",
+            "confidence": 0.6
+          },
+          "source": {
+            "name": "The Motley Fool on MSN",
+            "url": "https://www.msn.com/en-us/money/companies/nio-already-has-a-european-solution-finally-time-to-buy-the-stock/ar-AA218rvZ?ocid=BingNewsVerp"
+          },
+          "date": "2026-04-17T21:52:16+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "NIO Q1 Deliveries and Profit",
+            "confidence": 0.9
+          },
+          "source": {
+            "name": "24/7 Wall St.",
+            "url": "https://247wallst.com/investing/2026/04/10/nio-jumps-6-on-its-first-ever-gaap-profit-and-a-near-doubling-of-q1-deliveries/"
+          },
+          "date": "2026-04-10T21:52:16+00:00",
+          "type": "news"
+        },
+        {
+          "event": {
+            "title": "Nio Auto China 2026 Debut",
+            "confidence": 0.8
+          },
+          "source": {
+            "name": "MSN",
+            "url": "https://www.msn.com/en-us/news/other/nio-to-debut-three-brands-together-at-auto-china-2026/gm-GM6CDAF4B8?ocid=BingNewsVerp"
+          },
+          "date": "2026-04-22T21:52:16+00:00",
+          "type": "news"
+        }
+      ],
+      "summary": {
+        "total_funding_events": 0,
+        "total_news_events": 5,
+        "high_confidence_funding": 0,
+        "high_confidence_news": 3
+      }
+    }
+  }
+}
