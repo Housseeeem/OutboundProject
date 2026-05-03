@@ -20,7 +20,7 @@ from smart_scraper_ai import SmartScraperAI
 logger = logging.getLogger(__name__)
 
 # Ta clé API
-APOLLO_KEY = "lwjI_IpYk0S28Lixu1MsXw"
+APOLLO_KEY = os.getenv("APOLLO_API_KEY", "")
 
 
 async def _gate_entity_validation(

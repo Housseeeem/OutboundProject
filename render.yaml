@@ -1,0 +1,213 @@
+databases:
+  - name: agentic-db
+    plan: basic-256mb
+    databaseName: agentic
+    user: agentic
+
+services:
+  - name: agentic-redis
+    type: keyvalue
+    plan: starter
+    ipAllowList: []
+
+  - name: worker-api
+    type: web
+    runtime: python
+    plan: starter
+    rootDir: WorkerModule
+    buildFilter:
+      paths:
+        - WorkerModule/**
+        - inject_collect_project/**
+        - render.yaml
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: agentic-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: agentic-redis
+          type: keyvalue
+          property: connectionString
+      - key: GRAPH_DB_URL
+        sync: false
+      - key: GRAPH_DB_USER
+        sync: false
+      - key: GRAPH_DB_PASSWORD
+        sync: false
+      - key: DETECTIVE_A2A_URL
+        fromService:
+          name: detective
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: WRITER_A2A_URL
+        fromService:
+          name: writer
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: GEMINI_API_KEY
+        sync: false
+
+  - name: detective
+    type: web
+    runtime: python
+    plan: starter
+    rootDir: detective
+    buildFilter:
+      paths:
+        - detective/**
+        - render.yaml
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          name: agentic-redis
+          type: keyvalue
+          property: connectionString
+      - key: WORKER_URL
+        fromService:
+          name: worker-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: WRITER_URL
+        fromService:
+          name: writer
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+
+  - name: writer
+    type: web
+    runtime: python
+    plan: starter
+    rootDir: Full-Writer/ai-outreach-writer-module-master
+    buildFilter:
+      paths:
+        - Full-Writer/ai-outreach-writer-module-master/**
+        - render.yaml
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          name: agentic-redis
+          type: keyvalue
+          property: connectionString
+      - key: WORKER_URL
+        fromService:
+          name: worker-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: GOOGLE_API_KEY
+        sync: false
+
+  - name: inject-collector
+    type: worker
+    runtime: docker
+    plan: starter
+    dockerfilePath: inject_collect_project/Dockerfile
+    dockerContext: inject_collect_project
+    buildFilter:
+      paths:
+        - inject_collect_project/**
+        - render.yaml
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          name: agentic-redis
+          type: keyvalue
+          property: connectionString
+      - key: WORKER_A2A_URL
+        fromService:
+          name: worker-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: DETECTIVE_A2A_URL
+        fromService:
+          name: detective
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: WRITER_A2A_URL
+        fromService:
+          name: writer
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: APOLLO_API_KEY
+        sync: false
+      - key: APIFY_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: NEO4J_URI
+        sync: false
+      - key: NEO4J_USER
+        sync: false
+      - key: NEO4J_PASSWORD
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: HUNTER_API_KEY
+        sync: false
+      - key: SNOVIO_CLIENT_ID
+        sync: false
+      - key: SNOVIO_CLIENT_SECRET
+        sync: false
+      - key: TOMBA_API_KEY
+        sync: false
+      - key: TOMBA_API_SECRET
+        sync: false
+      - key: AEROLEADS_API_KEY
+        sync: false
+
+  - name: strategy-engine
+    type: web
+    runtime: python
+    plan: starter
+    rootDir: Full-Writer/prospect_strategy_engine
+    buildFilter:
+      paths:
+        - Full-Writer/prospect_strategy_engine/**
+        - render.yaml
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+    healthCheckPath: /
+    envVars:
+      - key: OUTREACH_MCP_URL
+        fromService:
+          name: writer
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: HUNTER_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+
+  - name: frontend
+    type: web
+    runtime: node
+    plan: starter
+    rootDir: frontend
+    buildFilter:
+      paths:
+        - frontend/**
+        - render.yaml
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_PUBLIC_API_BASE
+        fromService:
+          name: worker-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL

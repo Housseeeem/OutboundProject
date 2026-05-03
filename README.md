@@ -102,6 +102,37 @@ curl.exe http://localhost:8000/health
 
 ---
 
+## Render Deployment
+
+This repo includes a Render blueprint at render.yaml that provisions these services:
+
+- worker-api (FastAPI)
+- detective (FastAPI)
+- writer (FastAPI)
+- inject-collector (background worker)
+- strategy-engine (Streamlit)
+- frontend (Next.js)
+
+### Required configuration
+
+1. The blueprint creates Render Postgres and Render Key Value (Redis-compatible) instances.
+2. During the initial Blueprint setup, Render prompts for all env vars marked sync: false. These are required secrets/credentials and must be filled in:
+
+- WorkerModule: GRAPH_DB_URL, GRAPH_DB_USER, GRAPH_DB_PASSWORD, GEMINI_API_KEY
+- Detective: GROQ_API_KEY, GEMINI_API_KEY
+- Writer: GOOGLE_API_KEY
+- Inject: APOLLO_API_KEY, APIFY_API_KEY, GEMINI_API_KEY, NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD, SERPER_API_KEY, HUNTER_API_KEY, SNOVIO_CLIENT_ID, SNOVIO_CLIENT_SECRET, TOMBA_API_KEY, TOMBA_API_SECRET, AEROLEADS_API_KEY
+- Strategy engine: HUNTER_API_KEY, TAVILY_API_KEY
+
+Cross-service URLs (Worker/Detective/Writer/Frontend/Strategy engine) are wired automatically via Render's service env vars in render.yaml.
+
+### Notes
+
+- inject-collector uses Playwright. If the native build fails, deploy that service with its Dockerfile instead.
+- Render Key Value is private-only in this blueprint (ipAllowList: []). If you need external access, update the ipAllowList in render.yaml.
+
+---
+
 ## Event Flow
 
 ### How a lead_ingested event travels end-to-end

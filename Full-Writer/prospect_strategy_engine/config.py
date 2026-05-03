@@ -27,7 +27,10 @@ class Settings:
     OPENAI_MODEL: str = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
     OPENAI_TIMEOUT: int = int(os.getenv("OPENAI_TIMEOUT", "45"))
     # Writer MCP endpoint
-    OUTREACH_MCP_URL: str = os.getenv("OUTREACH_MCP_URL", "http://localhost:8003/mcp")
+    _raw_mcp_url = os.getenv("OUTREACH_MCP_URL", "http://localhost:8003/mcp")
+    if _raw_mcp_url and not _raw_mcp_url.rstrip("/").endswith("/mcp"):
+        _raw_mcp_url = f"{_raw_mcp_url.rstrip('/')}/mcp"
+    OUTREACH_MCP_URL: str = _raw_mcp_url
     OUTREACH_MCP_TOOL_NAME: str = os.getenv("OUTREACH_MCP_TOOL_NAME", "generate_outreach")
 
     # Default outreach parameters (used when calling the Writer MCP)
