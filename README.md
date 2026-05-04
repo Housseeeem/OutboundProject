@@ -1,9 +1,6 @@
-# AgenticOutbound
+# Agentic B2B Outreach Suite
 
-An end-to-end AI-powered B2B outbound engine. The system collects and enriches leads, scores and graphs relationships, plans and executes outreach campaigns, and tracks outcomes — all connected through an event-driven architecture with full traceability.
-
----
-
+> **Topics:** `python`, `artificial-intelligence`, `machine-learning`, `multi-agent-systems`, `data-analysis`, `automation`, `web-development`, `api`, `data-processing`
 
 ## Overview
 
@@ -17,290 +14,143 @@ This project was completed under the guidance of the following professors at **E
 
 The ecosystem is built upon a highly modular architecture comprising **six distinct autonomous systems**. Together, they automate the entire sales intelligence and outreach pipeline—from discovering leads to generating highly personalized, multi-channel messaging strategies.
 
-## Architecture Overview
+---
 
-```
-Inject → Detective → Writer → Worker → Metrics → Optimization
-```
+## The 6 Core Modules
 
-| Module | Role |
-|---|---|
-| **Inject** | Collects, enriches, and versions B2B lead data; emits `lead_ingested` events |
-| **Detective** | Filters, scores leads, and builds relationship graphs |
-| **Writer** | Plans and executes AI-driven outreach campaigns |
-| **Worker** | Telemetry, traceability, outcome linking, and optimization |
+### 1. `detective` (Agentic Lead Generation)
+An LLM-powered ReAct agent designed to dynamically extract Ideal Customer Profiles (ICPs) and build target company lists.
+- **Dynamic Routing**: Replaces hardcoded pipelines with an LLM that autonomously decides which tools to execute and in what order.
+- **Robust Recovery**: Features automatic retry logic (up to 3 times per tool) with semantic broadening (e.g., expanding industry terms) for empty results.
+- **Integration**: Exposes Model Context Protocol (MCP) tools for external orchestrators to run full pipelines and access an auditable `agent_scratchpad`.
 
-All modules communicate via a canonical `EventEnvelope` published to Redis pub/sub and consumed by Worker's background subscriber.
+### 2. `intent` (Agentic Intent System)
+An intelligent clustering and explainability engine that monitors company signals.
+- **Signal Extraction**: Analyzes company funding and news events using DuckDuckGo for live data gathering.
+- **Explainable AI (XAI)**: Provides an XAI engine to clearly justify event clustering decisions, source reliability, and confidence scores.
+- **Performance Evaluation**: Built-in metrics collection and system performance evaluator.
+
+### 3. `inject collect` (Discovery & Scraping)
+An advanced enterprise data aggregation and warehousing system.
+- **API Discovery**: Automates the discovery of companies and leads using the Apollo.io API based on location and industry filters.
+- **Smart Scraping**: Combines Playwright-based dynamic website scraping with Google Gemini AI to extract technical fingerprints and product summaries.
+- **Data Merging**: Merges multi-source data with confidence scoring and stores versioned profiles in a Neo4j AuraDB graph database.
+
+### 4. `writer` (Message Generator Pipeline)
+A multi-agent LangGraph pipeline that writes, validates, and refines personalized sales outreach messages.
+- **5-Step Flow**: Orchestrates `Planner → Researcher → Strategist → Writer → Critic`.
+- **Constraint Enforcement**: Dynamically fetches CRM history, enforces hard constraints (character limits, banned phrases), and uses the Critic agent to bounce bad drafts back to the Writer.
+- **Human-in-the-Loop**: Can pause after the Critic approves a message, waiting for a human decision before dispatching via Email or LinkedIn.
+
+### 5. `strategist` (Sequence Generator)
+A dedicated orchestration module for building multi-step outreach sequences.
+- **UI & Workflows**: Provides a Streamlit user interface and utilizes Temporal workers to map out a sequenced outreach strategy.
+- **Decision Engine**: Finds decision-makers, researches them, and plans the sequence timing across channels before delegating the actual content drafting to the `writer` module.
+
+### 6. `worker` (Telemetry & Optimization Backend)
+The central nervous system acting as the telemetry, traceability, and continuous optimization spine.
+- **Architecture**: Built on FastAPI and PostgreSQL (`asyncpg`) with a Redis subscriber operating in the background.
+- **Event Tracking**: Automatically creates worker tables to persist events, detect near-duplicates, and link outcomes (e.g., replies, clicks) to specific outreach generations.
+- **Autonomous Optimization**: Runs an autonomous background loop based on `feedback_submitted` events to continuously refine the system's targeting and messaging rules.
 
 ---
 
-## Repository Structure
+## 🏗️ System Architecture & Data Flow
 
-```
-OutboundProject/
-├── inject_collect_project/     # Module 1 — data collection & enrichment pipeline
-│   ├── main_discovery.py       # Pipeline entry point
-│   ├── event_emitter.py        # Redis pub/sub emission with in-memory fallback
-│   ├── apollo_scraper.py       # Apollo.io search + enrich
-│   ├── apify_enricher.py       # Apify website crawler + news scraper
-│   ├── intent_collector.py     # Intent signals (news, jobs, tech changes)
-│   ├── detective_formatter.py  # Formats payload for downstream modules
-│   ├── persona_search_enrich.py# Persona discovery + contact enrichment
-│   ├── database_manager.py     # Neo4j versioned storage
-│   └── documentation/
-│       ├── README_HighLevel.md
-│       └── README_technical.md
-│
-├── WorkerModule/               # Module 4 — telemetry, integrity, graph trace, optimization, agent runtime
-│   ├── app/
-│   │   ├── main.py             # FastAPI app, DB lifecycle, Redis subscriber + optimizer background tasks
-│   │   ├── subscriber.py       # Redis pub/sub ingestion on canonical event channels
-│   │   ├── optimizer.py        # Autonomous config tuning loop from feedback events
-│   │   ├── config.py           # Runtime settings and guardrails
-│   │   ├── routers/
-│   │   │   ├── ingest.py       # /v1/events*, /v1/outcomes/link
-│   │   │   ├── trace.py        # /v1/metrics, /v1/kpis, /v1/integrity, graph + optimization APIs
-│   │   │   ├── agent.py        # /v1/agent/*
-│   │   │   ├── a2a.py          # /.well-known/agent.json, /tasks/send, /tasks/sendSubscribe
-│   │   │   ├── config.py       # /v1/config*
-│   │   │   └── feedback.py     # /v1/feedback
-│   │   └── modules/worker/
-│   │       ├── storage.py      # Events/outcomes/integrity/optimization persistence
-│   │       ├── schemas.py      # Canonical payload schema validation
-│   │       ├── sync.py         # Postgres->graph projection + parity/checkpoints
-│   │       ├── graph.py        # Graph node/edge builders
-│   │       ├── integrity.py    # Integrity checking helpers
-│   │       └── kpi.py          # KPI computation helpers
-│   └── tests/
-│       ├── test_bug_condition.py
-│       └── test_preservation.py
-│
-├── frontend/                   # Control Plane dashboard (Next.js App Router)
-│   ├── src/app/                # UI routes: dashboard, mission control, traces, settings
-│   ├── src/components/         # Mission control UI components
-│   ├── src/lib/useAgentRun.ts  # Agent run polling + resume logic
-│   ├── next.config.ts          # Next.js standalone output for Docker
-│   └── Dockerfile              # Production container build
-│
-└── docker-compose.yml          # Shared stack: Redis, Postgres, Neo4j, API, Inject
+```text
+┌─────────────────┐      ┌─────────────────┐      ┌──────────────────┐
+│ 3. inject collect│─────▶│  1. detective   │─────▶│    2. intent     │
+│ (Data Aggregator)│      │ (Targeting LLM) │      │ (News & Funding) │
+└─────────────────┘      └────────┬────────┘      └────────┬─────────┘
+                                  │                        │
+                                  ▼                        ▼
+┌─────────────────┐      ┌─────────────────┐      ┌──────────────────┐
+│   5. strategist │◀─────│    4. writer    │◀─────│    6. worker     │
+│(Sequence & UI)  │─────▶│(LangGraph Gen)  │─────▶│ (Telemetry DB)   │
+└─────────────────┘      └─────────────────┘      └──────────────────┘
 ```
 
 ---
 
-## Quick Start
+## Tech Stack
+
+### Frontend & Workflows
+- **Streamlit**: For the `strategist` Prospect Strategy Engine UI.
+- **React.js & Material-UI**: Scalable web interfaces for general monitoring.
+- **Temporal**: Durable, retryable background workflows for sequence timing.
+
+### Backend & Orchestration
+- **Python 3.11+**
+- **FastAPI**: Backend framework for the `worker` and `writer` APIs.
+- **LangGraph & LangChain**: Sequential multi-agent routing.
+- **Model Context Protocol (FastMCP)**: Standardized Agent-to-Agent communication.
+
+### Data & AI Tools
+- **Databases**: PostgreSQL (Relational Telemetry), Redis (Message Queues), Neo4j AuraDB (Graph Profiles).
+- **AI Models**: Google Gemini Pro/Flash, Groq (Llama-3 8b-instant).
+- **Automation**: Playwright (Web scraping), Apollo.io API (Lead intelligence), Docker & Docker Compose.
+
+---
+
+## Directory Structure
+
+```text
+agentic-b2b-suite/
+├── detective/                      # ReAct agent, MCP tools, and scratchpad
+├── intent/                         # XAI, Funding/News clustering LangGraph
+├── inject_collect/                 # Apollo discovery & AI Playwright scraper
+├── writer/                         # 5-Agent message generator & validation
+├── strategist/                     # Sequence builder, Temporal worker, Streamlit UI
+├── worker/                         # Telemetry API, Postgres tables, Redis subscriber
+└── README.md
+```
+
+---
+
+## Getting Started
 
 ### Prerequisites
-- Docker Desktop running
+- **Python** 3.8+ (3.11 highly recommended)
+- **Docker** & **Docker Compose**
+- API Keys for **Google Gemini**, **Groq**, and **Apollo.io**.
+- (Optional) OpenRouteService key for geo-filtering in `detective`.
 
-### Start the full stack
+### Installation Setup
 
-```bash
-docker-compose up -d
-```
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/agentic-b2b-suite.git
+   cd agentic-b2b-suite
+   ```
 
-This starts:
-- `redis` — shared message broker (port 6379)
-- `postgres` — Worker event store (port 5433)
-- `neo4j` — Inject graph database (ports 7475, 7688)
-- `api` — WorkerModule FastAPI service (port 8000)
-- `inject_collector` — Inject pipeline container
-- `frontend` — Control Plane dashboard (port 3000)
+2. **Configure Environment Variables**
+   Create a `.env` file at the root or within specific module directories:
+   ```env
+   GROQ_API_KEY=your_groq_key
+   GEMINI_API_KEY=your_gemini_key
+   APOLLO_API_KEY=your_apollo_key
+   DATABASE_URL=postgres://user:pass@localhost:5432/db
+   REDIS_URL=redis://localhost:6379/0
+   GRAPH_DB_URL=neo4j+s://...
+   ```
 
-### Verify everything is healthy
+3. **Run the Full Ecosystem with Docker**
+   Launch the multi-agent pipelines and telemetry backends simultaneously:
+   ```bash
+   docker-compose up --build
+   ```
 
-```bash
-curl.exe http://localhost:8000/health
-# {"status":"ok"}
-```
-
----
-
-## Render Deployment
-
-This repo includes a Render blueprint at render.yaml that provisions these services:
-
-- worker-api (FastAPI)
-- detective (FastAPI)
-- writer (FastAPI)
-- inject-collector (background worker)
-- strategy-engine (Streamlit)
-- frontend (Next.js)
-
-### Required configuration
-
-1. The blueprint creates Render Postgres and Render Key Value (Redis-compatible) instances.
-2. During the initial Blueprint setup, Render prompts for all env vars marked sync: false. These are required secrets/credentials and must be filled in:
-
-- WorkerModule: GRAPH_DB_URL, GRAPH_DB_USER, GRAPH_DB_PASSWORD, GEMINI_API_KEY
-- Detective: GROQ_API_KEY, GEMINI_API_KEY
-- Writer: GOOGLE_API_KEY
-- Inject: APOLLO_API_KEY, APIFY_API_KEY, GEMINI_API_KEY, NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD, SERPER_API_KEY, HUNTER_API_KEY, SNOVIO_CLIENT_ID, SNOVIO_CLIENT_SECRET, TOMBA_API_KEY, TOMBA_API_SECRET, AEROLEADS_API_KEY
-- Strategy engine: HUNTER_API_KEY, TAVILY_API_KEY
-
-Cross-service URLs (Worker/Detective/Writer/Frontend/Strategy engine) are wired automatically via Render's service env vars in render.yaml.
-
-### Notes
-
-- inject-collector uses Playwright. If the native build fails, deploy that service with its Dockerfile instead.
-- Render Key Value is private-only in this blueprint (ipAllowList: []). If you need external access, update the ipAllowList in render.yaml.
+4. **Run Individual Modules (Example: Writer)**
+   ```bash
+   cd writer
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload --port 8003
+   ```
 
 ---
 
-## Event Flow
+## Acknowledgments
 
-### How a lead_ingested event travels end-to-end
-
-1. Inject processes a company and calls `emit_lead_ingested(payload)`
-2. `event_emitter.py` wraps the payload in a canonical `EventEnvelope` and publishes it to the Redis `lead_ingested` channel
-3. Worker's `subscriber.py` background task receives the message, validates the envelope, and calls `save_event()` directly
-4. The event is stored in Postgres and immediately queryable via the trace API
-
-```bash
-# Query the event timeline for a correlation ID
-curl.exe http://localhost:8000/v1/events/trace/{correlation_id}
-```
-
-### EventEnvelope schema
-
-```json
-{
-  "event_id":       "uuid",
-  "correlation_id": "uuid",
-  "module":         "inject | detective | writer | worker",
-  "event_type":     "lead_ingested | lead_scored | message_sent | ...",
-  "timestamp":      "ISO 8601",
-  "payload":        {},
-  "metadata":       {}
-}
-```
-
----
-
-## Worker API
-
-Base URL: `http://localhost:8000`
-
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/health` | Liveness check |
-| `GET` | `/ready` | Readiness check |
-| `POST` | `/v1/events/ingest` | Ingest one canonical event with idempotency + duplicate-window safeguards |
-| `GET` | `/v1/events` | List events with optional filters |
-| `GET` | `/v1/events/trace/{correlation_id}` | Correlation timeline (chronological event list) |
-| `POST` | `/v1/outcomes/link` | Link an outcome to a decision event |
-| `GET` | `/v1/metrics` | Correlation or global metrics (reply/conversion rates, counts) |
-| `GET` | `/v1/kpis` | System KPI summary |
-| `GET` | `/v1/integrity/audit` | Detect missing/duplicate/orphan/chain-break issues |
-| `GET` | `/v1/trace/correlation/{correlation_id}` | Graph-oriented correlation trace (with fallback path) |
-| `POST` | `/v1/optimization/run` | Generate dry-run recommendations |
-| `GET` | `/v1/optimization/recommendations` | Recommendation history |
-| `POST` | `/v1/optimization/recommendations/{id}/approve` | Approve recommendation |
-| `POST` | `/v1/optimization/recommendations/{id}/execute` | Execute dry-run/apply with policy guardrails |
-| `POST` | `/v1/optimization/recommendations/{id}/reject` | Reject recommendation |
-| `POST` | `/v1/optimization/recommendations/{id}/rollback` | Roll back recommendation |
-| `POST` | `/v1/agent/runs` | Launch synchronous agent run |
-| `POST` | `/v1/agent/runs/async` | Launch asynchronous agent run |
-| `GET` | `/.well-known/agent.json` | A2A agent card |
-| `POST` | `/tasks/send` | A2A task endpoint |
-| `POST` | `/tasks/sendSubscribe` | A2A SSE endpoint |
-
----
-
-## Frontend (Control Plane Dashboard)
-
-The frontend is a Next.js (App Router) control plane located in `frontend/`. It renders a dashboard and mission-control experience for running agent workflows and inspecting pipeline telemetry.
-
-### What the UI actually does
-
-- **Dashboard** (`/`) fetches recent events from `GET /v1/events?limit=20` and summarizes lead ingestion, scoring, and message generation.
-- **Mission Control** (`/mission`) launches and monitors agent runs via `POST /v1/agent/runs/async`, polls `GET /v1/agent/runs/{id}`, and resumes human approvals with `POST /v1/agent/runs/{id}/resume`.
-- **Pipeline Traces** (`/traces`) queries `GET /v1/events/trace/{correlation_id}`.
-- **Settings & Config** (`/settings`) loads `GET /v1/config` and persists updates to `POST /v1/config/update`.
-
-### Local development
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The UI expects the Worker API at `http://localhost:8000` and will require CORS for local development.
-
-
-## Configuration
-
-### WorkerModule (`WorkerModule/.env`)
-
-```env
-DATABASE_URL=postgresql://user:password@localhost:5433/agentic
-REDIS_URL=redis://redis:6379
-GRAPH_DB_URL=neo4j+s://your-instance.databases.neo4j.io
-GRAPH_DB_USER=your_user
-GRAPH_DB_PASSWORD=your_password
-GEMINI_API_KEY=your_key
-OPENAI_API_KEY=your_key
-```
-
-### Inject (`inject_collect_project/.env`)
-
-```env
-APOLLO_API_KEY=your_key
-APIFY_API_KEY=your_key
-NEO4J_URI=neo4j+s://your-instance.databases.neo4j.io
-NEO4J_USER=your_user
-NEO4J_PASSWORD=your_password
-REDIS_URL=redis://redis:6379
-```
-
----
-
-## Running Tests
-
-```bash
-# Unit + property-based tests (no Docker required)
-python -m pytest WorkerModule/tests/ -v
-```
-
-17 tests covering:
-- Subscriber existence and startup wiring
-- Redis message → `save_event()` call path
-- Docker network and Redis service sharing
-- Envelope field preservation across all generated payloads
-- HTTP ingest endpoint regression (202 Accepted)
-- In-memory fallback when Redis is unavailable
-
----
-
-## Manual End-to-End Test
-
-Publish a test event from inside the API container (avoids PowerShell quoting issues):
-
-```bash
-docker exec outboundproject-api-1 python3 -c "
-import asyncio, redis.asyncio as r, json
-asyncio.run(r.from_url('redis://redis:6379').publish('lead_ingested', json.dumps({
-    'event_id': '00000000-0000-0000-0000-000000000001',
-    'correlation_id': '00000000-0000-0000-0000-000000000002',
-    'module': 'inject',
-    'event_type': 'lead_ingested',
-    'timestamp': '2026-04-25T10:00:00+00:00',
-    'payload': {'company_id': 'test'},
-    'metadata': {}
-})))
-"
-
-curl.exe http://localhost:8000/v1/events/trace/00000000-0000-0000-0000-000000000002
-```
-
-Expected response: the stored event JSON.
-
----
-
-## Design Principles
-
-- **Event-driven** — all inter-module communication via Redis pub/sub `EventEnvelope`
-- **Full traceability** — every lead carries a `correlation_id` from ingestion to outcome
-- **Outcome-driven optimization** — Worker links decisions to outcomes and computes KPIs
-- **Loose coupling** — modules share only the event schema, not code or databases
-- **Graceful degradation** — Inject falls back to in-memory queue when Redis is unavailable
+This extensive multi-agent project was developed under the guidance of the faculty at **Esprit School of Engineering**. It serves as an exploration into the bleeding edge of artificial intelligence, multi-agent automated data analysis, Explainable AI, and scalable enterprise telemetry architectures.
