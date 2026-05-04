@@ -4,6 +4,19 @@ An end-to-end AI-powered B2B outbound engine. The system collects and enriches l
 
 ---
 
+
+## Overview
+
+This project, **Agentic B2B Outreach Suite**, was developed as part of the coursework **CS503 - Full-Stack Development** at **Esprit School of Engineering**, and as a partnership with **Addvocate AI**, a Tunisian startup. It explores real-time B2B data processing, automated lead generation, multi-agent orchestration, and personalized outreach using large language models.
+
+This project was completed under the guidance of the following professors at **Esprit School of Engineering**:
+
+- Pr. [Sonia Mesbeh](mailto:sonia.mesbeh@Esprit.tn)
+- Pr. [Jihene Jebri](mailto:Jihene.Jebri@esprit.tn)
+- Pr. [Wided Askri](mailto:Wided.Askri@esprit.tn)
+
+The ecosystem is built upon a highly modular architecture comprising **six distinct autonomous systems**. Together, they automate the entire sales intelligence and outreach pipeline—from discovering leads to generating highly personalized, multi-channel messaging strategies.
+
 ## Architecture Overview
 
 ```
